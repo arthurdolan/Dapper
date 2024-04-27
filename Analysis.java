@@ -41,9 +41,8 @@ public class Analysis
                             personMap.put(name, person);
                             hashNames.add(name);
                         }
-                        actualUser.addFollower();
+                        personMap.get(name).addFollower();
                         actualUser.addFollowing(personMap.get(name));
-                        
                     }
                     
                 }
