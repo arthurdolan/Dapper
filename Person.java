@@ -5,10 +5,10 @@ public class Person {
     private int numFollowers;
     private List<Person> following;
     
-    public Person(String name, int numFollowers)
+    public Person(String name)
     {
         this.name = name;
-        this.numFollowers = numFollowers;
+        this.numFollowers=0;
         this.following = new ArrayList<>();
     }
     public int addFollower()
@@ -29,5 +29,15 @@ public class Person {
     }
     public List<Person> getFollowing() {
         return following;
+    }
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name).append(", ");
+        sb.append("Followers: ").append(numFollowers).append(", ");
+        sb.append("Following: ");
+        for (Person person : following) {
+            sb.append(person.getName()).append(", ");
+        }
+        return sb.toString();
     }
 }
