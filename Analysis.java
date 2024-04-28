@@ -57,28 +57,30 @@ public class Analysis
                         }
                         actualUser.addFollowing(actualUser);
                         numEdges++;
-                        personMap.get(name).addFollower();
-                        //actualUser.addFollowing(personMap.get(name));
-                    }
-                    
+                        personMap.get(name).addFollower(actualUser);
+                    }   
                 }
+                //TASKS INITIALISATION
+                int numNodes = hashNames.size();
+                Tasks tasks = new Tasks();
+                tasks.density(numNodes,numEdges);
+                tasks.highestFollowers(personMap);
+                tasks.highestFollowing(personMap);
+                tasks.degreesOfSeparation(personMap, firstUser);
+                //TASKS 
                 readFile.close();
             }   
                 catch (FileNotFoundException e)
                 {
                     System.out.println("The File was not found");
                 }
-            
+                
                 
         }
+
         for (Person person : personMap.values()) {
             System.out.println(person);
         }  
-        int numNodes = hashNames.size();
-        Tasks tasks = new Tasks();
-        tasks.density(numNodes,numEdges);
-        tasks.highestFollowers(personMap);
-        tasks.highestFollowing(personMap);
 
     }     
 }

@@ -2,18 +2,21 @@ import java.util.List;
 import java.util.ArrayList;
 public class Person {
     private String name;
-    private int numFollowers;
+    //private int numFollowers;
     private List<Person> following;
-    
+    private List<Person> followers;
+
     public Person(String name)
     {
         this.name = name;
-        this.numFollowers = 0;
+        //this.numFollowers = 0;
         this.following = new ArrayList<>();
+        this.followers = new ArrayList<>();
     }
-    public void addFollower()
+    public void addFollower(Person follower)
     {
-        numFollowers++;
+        this.followers.add(follower);
+        //numFollowers++;
     }
     public void addFollowing(Person following)
     {
@@ -23,9 +26,9 @@ public class Person {
     {
         return name;
     }
-    public int getFollowers()
+    public List<Person> getFollowers()
     {
-        return numFollowers;
+        return followers;
     }
     public List<Person> getFollowing() {
         return following;
@@ -33,7 +36,7 @@ public class Person {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name: ").append(name).append(", ");
-        sb.append("Followers: ").append(numFollowers).append(", ");
+        //sb.append("Followers: ").append(numFollowers).append(", ");
         sb.append("Following: ");
         for (Person person : following) {
             sb.append(person.getName()).append(", ");
