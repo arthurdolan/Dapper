@@ -8,12 +8,12 @@ public class Person {
     public Person(String name)
     {
         this.name = name;
-        this.numFollowers=0;
+        this.numFollowers = 0;
         this.following = new ArrayList<>();
     }
-    public int addFollower()
+    public void addFollower()
     {
-        return numFollowers++;
+        numFollowers++;
     }
     public void addFollowing(Person following)
     {

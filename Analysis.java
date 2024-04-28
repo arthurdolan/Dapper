@@ -5,34 +5,48 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class Analysis
 {
     public static void main(String[] args)
     {
         HashMap<String, Person> personMap = new HashMap<>(); // Way to access person instances in a loop  by their names
         Set<String> hashNames = new HashSet<>(); //Stores each name to ensure not added twice
+        int numEdges = 0;//For density calculation later on
         if(args.length != 1)
         {
             System.out.println("Incorrect number of command line arguments (should be 1)");
         }
         else
         {
+            boolean firstInput = true;
+            String firstUser = "";//Stores initial user as hashMaps do not keep order
             String inputFileName = args[0]; // Takes first file from command line
             File inputFile = new File(inputFileName);
             try
             {
                 Scanner readFile = new Scanner(inputFile); 
+                Person actualUser = null;// Declared outside the loop so its scope increases out the if else loop
                 while(readFile.hasNextLine())
                 {
- 
                     String line = readFile.nextLine();
                     String names[]= line.trim().split("\\s+");//seperates and stores each name in names[]
                     String actualUserName = names[0];
-                    Person actualUser = new Person(actualUserName);
-                    personMap.put(actualUserName, actualUser);
-                    hashNames.add(actualUserName);
-                    for(int i=1;i<names.length;i++) //iterates through each name in names
+                    if(firstInput)
+                    {
+                        firstUser = actualUserName;
+                        firstInput = false;
+                    }
+                    if(!hashNames.contains(actualUserName))
+                    {
+                        actualUser = new Person(actualUserName);
+                        personMap.put(actualUserName, actualUser);
+                        hashNames.add(actualUserName);
+                    }
+                    else
+                    {
+                        actualUser = personMap.get(actualUserName);
+                    }
+                    for(int i=1;i<names.length;i++)
                     {
                         String name = names[i];
                         if(!hashNames.contains(name))//will create person instance if not already created
@@ -41,8 +55,10 @@ public class Analysis
                             personMap.put(name, person);
                             hashNames.add(name);
                         }
+                        actualUser.addFollowing(actualUser);
+                        numEdges++;
                         personMap.get(name).addFollower();
-                        actualUser.addFollowing(personMap.get(name));
+                        //actualUser.addFollowing(personMap.get(name));
                     }
                     
                 }
@@ -58,5 +74,11 @@ public class Analysis
         for (Person person : personMap.values()) {
             System.out.println(person);
         }  
+        int numNodes = hashNames.size();
+        Tasks tasks = new Tasks();
+        tasks.density(numNodes,numEdges);
+        tasks.highestFollowers(personMap);
+        tasks.highestFollowing(personMap);
+
     }     
 }
