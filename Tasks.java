@@ -3,6 +3,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.List;
 import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
 public class Tasks {
     public Tasks()
     {
@@ -77,5 +79,24 @@ public class Tasks {
         int hashSize = secondDegreeHash.size();
         System.out.println("No of Second degree links = "+hashSize);
 
+    }
+    public void medianFollowers(Map<String, Person> personMap)
+    {
+        ArrayList<Integer> list = new ArrayList<>();//Sorts during insertion
+        for(Person person : personMap.values())
+        {
+            List<Person> followerList = person.getFollowers();
+            list.add(followerList.size());
+        }
+        int setSize = list.size();
+        if(setSize%2==1)
+        {
+            setSize= ((setSize+1)/2)-1;
+        }
+        else{
+            setSize = (setSize/2)-1;
+        }
+        Collections.sort(list);
+        System.out.println("Median = "+list.get(setSize));
     }
 }

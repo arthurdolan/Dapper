@@ -67,6 +67,7 @@ public class Analysis
                 tasks.highestFollowers(personMap);
                 tasks.highestFollowing(personMap);
                 tasks.degreesOfSeparation(personMap, firstUser);
+                tasks.medianFollowers(personMap);
                 //TASKS 
                 readFile.close();
             }   
