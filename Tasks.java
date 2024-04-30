@@ -1,4 +1,3 @@
-//import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
@@ -8,13 +7,15 @@ import java.util.Collections;
 public class Tasks {
     public Tasks()
     {
+        //empty class (only used for methods)
     }
     public void density(int nodes, int edges)
     {
         double density = (double) edges/(nodes*(nodes-1));
-        String eightDPdensity = String.format("%.8f", density);
-        System.out.println("density = "+eightDPdensity);
+        density = Math.round(density * 1e8) / 1e8; //Rounds to 8dp
+        System.out.println("Task 1: "+density);
     }
+    
     public void highestFollowers(Map<String, Person> personMap){
         int topFollowed =0;
         String mostFollowedUser = "";
@@ -36,7 +37,7 @@ public class Tasks {
             }
 
         }
-        System.out.println("Highest Followers = "+mostFollowedUser);
+        System.out.println("Task 2: "+mostFollowedUser);
     }
     public void highestFollowing(Map<String, Person> personMap)
     {
@@ -59,7 +60,7 @@ public class Tasks {
                 }
             }
         }
-        System.out.println("Highest Following = "+userFollowingMost);
+        System.out.println("Task 3: "+userFollowingMost);
     }
     public void degreesOfSeparation(Map<String, Person> personMap, String firstUser)
     {
@@ -77,7 +78,7 @@ public class Tasks {
         secondDegreeHash.remove(firstPerson);
         
         int hashSize = secondDegreeHash.size();
-        System.out.println("No of Second degree links = "+hashSize);
+        System.out.println("Task 4: "+hashSize);
 
     }
     public void medianFollowers(Map<String, Person> personMap)
@@ -97,6 +98,43 @@ public class Tasks {
             setSize = (setSize/2)-1;
         }
         Collections.sort(list);
-        System.out.println("Median = "+list.get(setSize));
+        System.out.println("Task 5: "+list.get(setSize));
+    }
+    public void infoSpreader(Map<String,Person> personMap)
+    {
+        String topPerson = "";
+        int maxDistance =0;
+        for(Person mainPerson : personMap.values())
+        {
+            Set<Person> pplInfluencedHash = new HashSet<>();
+            int distance = calcReach(mainPerson, pplInfluencedHash);
+            if(distance>maxDistance)
+            {
+                topPerson = mainPerson.getName();
+                maxDistance = distance;
+            }
+            else if(distance == maxDistance)
+            {
+                if(0>mainPerson.getName().compareTo(topPerson))
+                {
+                    topPerson = mainPerson.getName();
+                }
+            }
+        }
+        System.out.println("Task 6: "+topPerson);
+    }
+    public int calcReach(Person person, Set<Person> pplInfluencedHash)
+    {
+        if(pplInfluencedHash.contains(person))
+        {
+            return 0;
+        }
+        pplInfluencedHash.add(person);//adds person to ensure not visited before
+        int distance = 1;
+        for(Person follower: person.getFollowers())
+        {    
+            distance+= calcReach(follower, pplInfluencedHash);
+        }
+        return distance;
     }
 }

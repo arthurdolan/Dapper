@@ -68,20 +68,14 @@ public class Analysis
                 tasks.highestFollowing(personMap);
                 tasks.degreesOfSeparation(personMap, firstUser);
                 tasks.medianFollowers(personMap);
+                tasks.infoSpreader(personMap);
                 //TASKS 
                 readFile.close();
             }   
                 catch (FileNotFoundException e)
                 {
                     System.out.println("The File was not found");
-                }
-                
-                
+                }      
         }
-
-        for (Person person : personMap.values()) {
-            System.out.println(person);
-        }  
-
     }     
 }

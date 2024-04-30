@@ -33,14 +33,4 @@ public class Person {
     public List<Person> getFollowing() {
         return following;
     }
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(name).append(", ");
-        //sb.append("Followers: ").append(numFollowers).append(", ");
-        sb.append("Following: ");
-        for (Person person : following) {
-            sb.append(person.getName()).append(", ");
-        }
-        return sb.toString();
-    }
 }
