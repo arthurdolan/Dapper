@@ -69,6 +69,8 @@ public class Analysis
                 tasks.degreesOfSeparation(personMap, firstUser);
                 tasks.medianFollowers(personMap);
                 tasks.infoSpreader(personMap);
+                Visual visual = new Visual();
+                visual.namesWindow(hashNames);
                 //TASKS 
                 readFile.close();
             }   
