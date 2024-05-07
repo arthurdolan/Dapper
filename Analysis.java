@@ -55,7 +55,7 @@ public class Analysis
                             personMap.put(name, person);
                             hashNames.add(name);
                         }
-                        actualUser.addFollowing(actualUser);
+                        actualUser.addFollowing(personMap.get(name));
                         numEdges++;
                         personMap.get(name).addFollower(actualUser);
                     }   
@@ -69,8 +69,8 @@ public class Analysis
                 tasks.degreesOfSeparation(personMap, firstUser);
                 tasks.medianFollowers(personMap);
                 tasks.infoSpreader(personMap);
-                Visual visual = new Visual();
-                visual.namesWindow(hashNames);
+                Visual visual = new Visual(personMap, hashNames);
+                visual.namesWindow();
                 //TASKS 
                 readFile.close();
             }   
