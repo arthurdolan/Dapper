@@ -12,7 +12,6 @@ public class Visual
 {
     private Map<String, Person> personMap;
     private JFrame frame;
-    private Set<String> hashNames;
     private List<String> namesList;
     public Visual(Map<String, Person> personMap, Set<String> hashName)
     {
@@ -26,7 +25,7 @@ public class Visual
     {
         frame = new JFrame(windowName);
         //JPanel panel = new JPanel();
-        frame.setSize(400,800);
+        frame.setSize(800,1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new JScrollPane(buttons));
         frame.setVisible(true);
@@ -51,7 +50,7 @@ public class Visual
             {
                 JButton retrievedName = (JButton) e.getSource();
                 String textName = retrievedName.getText();
-                if(textName == "Close")
+                if(textName == "Return Home")
                 {
                     namesWindow();
 
@@ -68,13 +67,15 @@ public class Visual
     {
         Person person = personMap.get(name);
 
+        //follower
+
         List<String> followerList =  new ArrayList<>();
         for(Person personIndex : person.getFollowers())
         {
             followerList.add(personIndex.getName());
         }
         Collections.sort(followerList);
-        followerList.add(0,"Close");
+        followerList.add(0,"Return Home");
         JPanel followersPanel = new JPanel(new GridLayout(0,1));
         followersPanel.setBorder(BorderFactory.createTitledBorder("Followers"));
         for(String nameIndex : followerList)
@@ -83,6 +84,9 @@ public class Visual
             followersPanel.add(actualButton);
             actualButton.addActionListener(new buttonClicked());
         }
+
+        //following
+
         List<String> followingList =  new ArrayList<>();
         System.out.println(person.getFollowing());
         for(Person index : person.getFollowing())
@@ -100,14 +104,42 @@ public class Visual
             followingPanel.add(actualButton);
             actualButton.addActionListener(new buttonClicked());
         }
-        JPanel parentPanel = new JPanel(new GridLayout(1, 2));
+        
+        //propagation
+
+        Map<Integer ,ArrayList<Person>> propMap =person.getPropMap();
+        JPanel propagationPanel = new JPanel(new GridLayout(0,1));
+        propagationPanel.setBorder(BorderFactory.createTitledBorder("Propagation Graph"));
+        Set <Integer> listOfDegrees = propMap.keySet();
+        
+        ArrayList<Integer> sortedDegrees = new ArrayList<>(listOfDegrees);
+        Collections.sort(sortedDegrees);
+        for(int degreesOfProp : sortedDegrees)
+        {
+            if (degreesOfProp == 0) 
+                {
+                    continue;// Skip degree
+                }
+            JPanel degreePanel = new JPanel(new GridLayout(0, 1));
+            degreePanel.setBorder(BorderFactory.createTitledBorder("Degree of Propagation: " + degreesOfProp));
+            propagationPanel.add(degreePanel);
+
+            System.out.println(degreesOfProp +" - ");
+            ArrayList<Person> peopleInDegree= propMap.get(degreesOfProp);
+            for(Person personInDegree: peopleInDegree)
+            {
+                String personsName = personInDegree.getName();
+                JButton actualButton = new JButton(personsName);
+                propagationPanel.add(actualButton);
+                actualButton.addActionListener(new buttonClicked());
+                System.out.println(personInDegree.getName());
+            }
+        }
+        JPanel parentPanel = new JPanel(new GridLayout(1, 3));
         parentPanel.add(followersPanel);
         parentPanel.add(followingPanel);
+        parentPanel.add(propagationPanel);
         addWindow(name+"'s User Record", parentPanel);
-    }
-    public void prevWindow()
-    {
-
     }
     
 }

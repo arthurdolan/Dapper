@@ -4,7 +4,11 @@ import java.util.Scanner; // Reads text files
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
+/*Main class: 
+It has error checking
+Creates person instances from the file whilst sorting into followers and following.
+It calls all the tasks and visual functions
+*/
 public class Analysis
 {
     public static void main(String[] args)

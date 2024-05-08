@@ -1,12 +1,17 @@
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.List;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+//This class is a modular approach to solving all the required tasks in the project
 public class Tasks {
     public Tasks()
     {
+
         //empty class (only used for methods)
     }
     public void density(int nodes, int edges)
@@ -100,14 +105,13 @@ public class Tasks {
         Collections.sort(list);
         System.out.println("Task 5: "+list.get(setSize));
     }
-    public void infoSpreader(Map<String,Person> personMap)
+    public int infoSpreader(Map<String,Person> personMap)
     {
         String topPerson = "";
         int maxDistance =0;
         for(Person mainPerson : personMap.values())
         {
-            Set<Person> pplInfluencedHash = new HashSet<>();
-            int distance = calcReach(mainPerson, pplInfluencedHash);
+            int distance = calcReachBFS(mainPerson);//calls Bfs search
             if(distance>maxDistance)
             {
                 topPerson = mainPerson.getName();
@@ -122,19 +126,29 @@ public class Tasks {
             }
         }
         System.out.println("Task 6: "+topPerson);
+        return(maxDistance);
     }
-    public int calcReach(Person person, Set<Person> pplInfluencedHash)
+    public int calcReachBFS(Person mainPerson)
     {
-        if(pplInfluencedHash.contains(person))
+        Queue<Person> queue = new LinkedList<>(); //creates queue to allow to iterate through all followers in order 
+        Map<Person, Integer> traversal = new HashMap<>(); // allows us to store people and their degrees
+        queue.add(mainPerson);
+        traversal.put(mainPerson, 0);
+        while(!queue.isEmpty())
         {
-            return 0;
+            Person currentPerson = queue.poll(); // accesses head off queue
+            int degrees = traversal.get(currentPerson);
+            mainPerson.addPropagation(degrees, currentPerson); // adds head of queue to propagation hashmap (needed for the visualisation)
+            for(Person follower: currentPerson.getFollowers())
+            {  
+               if(!traversal.containsKey(follower))
+               {
+                    int followerDegrees = degrees + 1;//allows the correct degrees in the while loop whilst incrementing degrees for future loops
+                    traversal.put(follower, followerDegrees);
+                    queue.add(follower);//adds the the back of the queue to allow for the current loop to complete
+               }
+            }
         }
-        pplInfluencedHash.add(person);//adds person to ensure not visited before
-        int distance = 1;
-        for(Person follower: person.getFollowers())
-        {    
-            distance+= calcReach(follower, pplInfluencedHash);
-        }
-        return distance;
+        return traversal.size(); // size needed for task 6
     }
 }
