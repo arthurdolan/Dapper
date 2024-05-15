@@ -11,14 +11,13 @@ import java.util.HashMap;
 public class Tasks {
     public Tasks()
     {
-
         //empty class (only used for methods)
     }
     public void density(int nodes, int edges)
     {
         double density = (double) edges/(nodes*(nodes-1));
         density = Math.round(density * 1e8) / 1e8; //Rounds to 8dp
-        System.out.println("Task 1: "+density);
+        System.out.println("Task 1: The density of the graph represented by the social network is "+density);
     }
     
     public void highestFollowers(Map<String, Person> personMap){
@@ -42,7 +41,7 @@ public class Tasks {
             }
 
         }
-        System.out.println("Task 2: "+mostFollowedUser);
+        System.out.println("Task 2: The person with the highest number of followers is "+mostFollowedUser);
     }
     public void highestFollowing(Map<String, Person> personMap)
     {
@@ -65,7 +64,7 @@ public class Tasks {
                 }
             }
         }
-        System.out.println("Task 3: "+userFollowingMost);
+        System.out.println("Task 3: The person who follows highest number of people is "+userFollowingMost);
     }
     public void degreesOfSeparation(Map<String, Person> personMap, String firstUser)
     {
@@ -83,7 +82,7 @@ public class Tasks {
         secondDegreeHash.remove(firstPerson);
         
         int hashSize = secondDegreeHash.size();
-        System.out.println("Task 4: "+hashSize);
+        System.out.println("Task 4: For the first user in the file ("+firstPerson.getName() +"), there are " +hashSize +" users two degrees away.");
 
     }
     public void medianFollowers(Map<String, Person> personMap)
@@ -103,7 +102,7 @@ public class Tasks {
             setSize = (setSize/2)-1;
         }
         Collections.sort(list);
-        System.out.println("Task 5: "+list.get(setSize));
+        System.out.println("Task 5: The median value for the number of followers in the network is "+list.get(setSize));
     }
     public int infoSpreader(Map<String,Person> personMap)
     {
@@ -125,7 +124,7 @@ public class Tasks {
                 }
             }
         }
-        System.out.println("Task 6: "+topPerson);
+        System.out.println("Task 6: The person who is most able to spread information in the network is "+topPerson);
         return(maxDistance);
     }
     public int calcReachBFS(Person mainPerson)

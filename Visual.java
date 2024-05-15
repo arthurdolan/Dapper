@@ -42,7 +42,7 @@ public class Visual
             buttons.add(actualButton);
             actualButton.addActionListener(new buttonClicked());
         }
-        addWindow("List of Dapper Users", buttons);
+        addWindow("Home - List of Dapper Users", buttons);
     }
     class buttonClicked implements ActionListener
         {
@@ -88,13 +88,10 @@ public class Visual
         //following
 
         List<String> followingList =  new ArrayList<>();
-        System.out.println(person.getFollowing());
         for(Person index : person.getFollowing())
         {
-            System.out.println(index.getName());
             followingList.add(index.getName());
         }
-        System.out.println(followingList);
         Collections.sort(followingList);
         JPanel followingPanel = new JPanel(new GridLayout(0,1));
         followingPanel.setBorder(BorderFactory.createTitledBorder("Following"));
@@ -124,7 +121,6 @@ public class Visual
             degreePanel.setBorder(BorderFactory.createTitledBorder("Degree of Propagation: " + degreesOfProp));
             propagationPanel.add(degreePanel);
 
-            System.out.println(degreesOfProp +" - ");
             ArrayList<Person> peopleInDegree= propMap.get(degreesOfProp);
             for(Person personInDegree: peopleInDegree)
             {
@@ -132,7 +128,6 @@ public class Visual
                 JButton actualButton = new JButton(personsName);
                 propagationPanel.add(actualButton);
                 actualButton.addActionListener(new buttonClicked());
-                System.out.println(personInDegree.getName());
             }
         }
         JPanel parentPanel = new JPanel(new GridLayout(1, 3));
